@@ -1,0 +1,218 @@
+{
+  "metadata": {
+    "version": 1,
+    "disable_limits": false,
+    "instance_type": "ml.m5.4xlarge",
+    "disable_validation": false
+  },
+  "parameters": [],
+  "nodes": [
+    {
+      "node_id": "6dedfb5a-0bc5-44f4-abd6-83cc04ed963e",
+      "type": "SOURCE",
+      "operator": "sagemaker.s3_source_0.1",
+      "parameters": {
+        "dataset_definition": {
+          "__typename": "S3CreateDatasetDefinitionOutput",
+          "datasetSourceType": "S3",
+          "name": "data",
+          "description": null,
+          "s3ExecutionContext": {
+            "__typename": "S3ExecutionContext",
+            "s3Uri": "s3://sushant-bucket-mumbai/cv-unicorn-gym/data/",
+            "s3ContentType": "image",
+            "s3HasHeader": true,
+            "s3FieldDelimiter": ",",
+            "s3DirIncludesNested": true,
+            "s3AddsFilenameColumn": false,
+            "s3RoleArn": null
+          }
+        }
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "f13326c3-0516-4cef-acbe-1ec63771b691",
+      "type": "TRANSFORM",
+      "operator": "sagemaker.spark.blur_image_0.1",
+      "parameters": {
+        "operator": "Blur image",
+        "blur_image_parameters": {
+          "blur": "Gaussian",
+          "gaussian_blur_parameters": {
+            "sigma": 3
+          }
+        }
+      },
+      "inputs": [
+        {
+          "name": "df",
+          "node_id": "6dedfb5a-0bc5-44f4-abd6-83cc04ed963e",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "81fcbd36-c9e7-4b40-9a56-5265e996b201",
+      "type": "TRANSFORM",
+      "operator": "sagemaker.spark.color_channels_0.1",
+      "parameters": {
+        "operator": "Color channels",
+        "Color channels_parameters": {
+          "value": "-10 to 10",
+          "cc_channel": "Green",
+          "cc_transform_type": "Multiply"
+        }
+      },
+      "inputs": [
+        {
+          "name": "df",
+          "node_id": "6dedfb5a-0bc5-44f4-abd6-83cc04ed963e",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "ae39baf2-23d8-44fc-aa24-1741645d9483",
+      "type": "TRANSFORM",
+      "operator": "sagemaker.spark.corrupt_image_0.1",
+      "parameters": {
+        "operator": "Corrupt image",
+        "corrupt_image_parameters": {
+          "corrupt": "Gaussian noise",
+          "gaussian_noise_parameters": {
+            "severity": 3
+          }
+        }
+      },
+      "inputs": [
+        {
+          "name": "df",
+          "node_id": "6dedfb5a-0bc5-44f4-abd6-83cc04ed963e",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "a37fa58f-ee93-491f-b792-272600bf7026",
+      "type": "TRANSFORM",
+      "operator": "sagemaker.spark.enhance_image_contrast_0.1",
+      "parameters": {
+        "operator": "Enhance image contrast",
+        "enhance_image_contrast_parameters": {
+          "enhance_contrast": "Gamma contrast",
+          "gamma_contrast_parameters": {
+            "gamma": 2
+          }
+        }
+      },
+      "inputs": [
+        {
+          "name": "df",
+          "node_id": "6dedfb5a-0bc5-44f4-abd6-83cc04ed963e",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "974e6828-4c09-4358-9ad8-2d13c0679db1",
+      "type": "DESTINATION",
+      "operator": "sagemaker.spark.s3_destination_0.1",
+      "name": "S3: color_augmentation",
+      "parameters": {
+        "output_config": {
+          "compression": "none",
+          "output_path": "s3://sushant-bucket-mumbai/cv-unicorn-gym/data_wrangler/color/",
+          "output_content_type": "IMAGE"
+        }
+      },
+      "inputs": [
+        {
+          "name": "default",
+          "node_id": "81fcbd36-c9e7-4b40-9a56-5265e996b201",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "f3af1fdc-ff25-4de8-9be0-338ad2cbbe1c",
+      "type": "DESTINATION",
+      "operator": "sagemaker.spark.s3_destination_0.1",
+      "name": "S3: blur_augmentation",
+      "parameters": {
+        "output_config": {
+          "compression": "none",
+          "output_path": "s3://sushant-bucket-mumbai/cv-unicorn-gym/data_wrangler/blur/",
+          "output_content_type": "IMAGE"
+        }
+      },
+      "inputs": [
+        {
+          "name": "default",
+          "node_id": "f13326c3-0516-4cef-acbe-1ec63771b691",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "aa57d65d-4d82-4358-907b-7977f7302e3b",
+      "type": "DESTINATION",
+      "operator": "sagemaker.spark.s3_destination_0.1",
+      "name": "S3: corrupt_augmentation",
+      "parameters": {
+        "output_config": {
+          "compression": "none",
+          "output_path": "s3://sushant-bucket-mumbai/cv-unicorn-gym/data_wrangler/corrupt/",
+          "output_content_type": "IMAGE"
+        }
+      },
+      "inputs": [
+        {
+          "name": "default",
+          "node_id": "ae39baf2-23d8-44fc-aa24-1741645d9483",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    }
+  ]
+}
