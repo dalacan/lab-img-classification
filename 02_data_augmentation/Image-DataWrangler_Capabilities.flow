@@ -19,7 +19,7 @@
           "description": null,
           "s3ExecutionContext": {
             "__typename": "S3ExecutionContext",
-            "s3Uri": "s3://sushant-bucket-mumbai/cv-unicorn-gym/data/",
+            "s3Uri": "s3://BUCKET_NAME/computer_vision-unicorn_gym/image_augmentation_data",
             "s3ContentType": "image",
             "s3HasHeader": true,
             "s3FieldDelimiter": ",",
@@ -147,7 +147,7 @@
       "parameters": {
         "output_config": {
           "compression": "none",
-          "output_path": "s3://sushant-bucket-mumbai/cv-unicorn-gym/data_wrangler/color/",
+          "output_path": "s3://BUCKET_NAME/computer_vision-unicorn_gym/image_augmentation_output_data_wrangler/color/",
           "output_content_type": "IMAGE"
         }
       },
@@ -172,7 +172,7 @@
       "parameters": {
         "output_config": {
           "compression": "none",
-          "output_path": "s3://sushant-bucket-mumbai/cv-unicorn-gym/data_wrangler/blur/",
+          "output_path": "s3://BUCKET_NAME/computer_vision-unicorn_gym/image_augmentation_output_data_wrangler/blur/",
           "output_content_type": "IMAGE"
         }
       },
@@ -197,7 +197,7 @@
       "parameters": {
         "output_config": {
           "compression": "none",
-          "output_path": "s3://sushant-bucket-mumbai/cv-unicorn-gym/data_wrangler/corrupt/",
+          "output_path": "s3://BUCKET_NAME/computer_vision-unicorn_gym/image_augmentation_output_data_wrangler/corrupt/",
           "output_content_type": "IMAGE"
         }
       },
