@@ -213,6 +213,31 @@
           "name": "default"
         }
       ]
+    },
+    {
+      "node_id": "48598c9c-aca4-4878-aad0-4fc9afe2dd3c",
+      "type": "DESTINATION",
+      "operator": "sagemaker.spark.s3_destination_0.1",
+      "name": "S3: enhanced_augmentation",
+      "parameters": {
+        "output_config": {
+          "compression": "none",
+          "output_path": "s3://BUCKET_NAME/computer_vision-unicorn_gym/image_augmentation_output_data_wrangler/enhanced/",
+          "output_content_type": "IMAGE"
+        }
+      },
+      "inputs": [
+        {
+          "name": "default",
+          "node_id": "a37fa58f-ee93-491f-b792-272600bf7026",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
     }
   ]
 }
